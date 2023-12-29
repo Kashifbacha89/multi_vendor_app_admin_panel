@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -75,13 +76,22 @@ class _UploadBannersScreenState extends State<UploadBannersScreen> {
     }
  }
  _uploadBanners()async{
+    EasyLoading.show();
    final _uuid = const Uuid().v4();
     final ref=FirebaseStorage.instance.ref().child('BannersImages').child(imageName!);
     if(kIsWeb){
       await ref.putData(webImage).whenComplete(()async{
+
+
         final imageUri=await ref.getDownloadURL();
         await FirebaseFirestore.instance.collection('Banners').doc(_uuid).set({
           'image':imageUri
+        }).whenComplete(() {
+          EasyLoading.dismiss();
+          setState(() {
+            _image=null;
+          });
+
         });
 
 
