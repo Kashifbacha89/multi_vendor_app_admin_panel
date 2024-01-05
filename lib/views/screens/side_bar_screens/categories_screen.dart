@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 class CategoriesScreen extends StatefulWidget {
   static const String routeName='/CategoriesScreen';
 
@@ -17,6 +19,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   final GlobalKey<FormState> _fomKey=GlobalKey<FormState>();
   final FirebaseStorage _fStorage=FirebaseStorage.instance;
   final FirebaseFirestore _firestore=FirebaseFirestore.instance;
+  TextEditingController categoryController=TextEditingController();
 
 
 
@@ -56,9 +59,34 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     }
   }
 
-  uploadCategory(){
+  uploadCategory()async{
     if(_fomKey.currentState!.validate()){
       print('Good boy');
+      EasyLoading.show();
+      final _uuid = const Uuid().v4();
+      final ref=FirebaseStorage.instance.ref().child('categoriesImages').child(imageName!);
+      if(kIsWeb){
+        await ref.putData(webImage).whenComplete(()async{
+
+
+          final imageUri=await ref.getDownloadURL();
+          await FirebaseFirestore.instance.collection('Categories').doc(imageName).set({
+            'image':imageUri,
+            'category name':categoryController.text
+          }).whenComplete(() {
+            EasyLoading.dismiss();
+            setState(() {
+              _image=null;
+            });
+
+          });
+
+
+        });
+
+
+      }
+
     }else{
       print(' O Bad guy');
     }
@@ -118,6 +146,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: SizedBox(
                     width: 170,
                     child: TextFormField(
+                      controller: categoryController,
                       validator: (value){
                         if(value!.isEmpty){
                           return 'please enter the category name';
