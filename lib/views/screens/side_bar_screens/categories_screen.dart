@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_vendor_app_admin_panel/views/screens/side_bar_screens/widgets/category_widget.dart';
 import 'package:uuid/uuid.dart';
 class CategoriesScreen extends StatefulWidget {
   static const String routeName='/CategoriesScreen';
@@ -77,6 +78,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             EasyLoading.dismiss();
             setState(() {
               _image=null;
+              _fomKey.currentState!.reset();
             });
 
           });
@@ -166,13 +168,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
                 ElevatedButton(
                     style:
-                    ElevatedButton.styleFrom(primary: Colors.yellow.shade900),
+                    ElevatedButton.styleFrom(backgroundColor: Colors.yellow.shade900),
                     onPressed: () {
                       uploadCategory();
                     },
                     child: Text('SAVE')),
               ],
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Divider(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text('Categories',style: TextStyle(fontWeight: FontWeight.w800,fontSize: 30),),
+              ),
+            ),
+            CategoryWidget(),
+
           ],
         ),
       ),
