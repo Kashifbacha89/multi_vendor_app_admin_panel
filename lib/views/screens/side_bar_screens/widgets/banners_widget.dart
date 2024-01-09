@@ -34,7 +34,6 @@ class BannersWidget extends StatelessWidget {
                       width: 100,
                       child: Image.network(categoryData['image']),
                     ),
-                    Text(categoryData['category name'])
                   ],
                 );
 
