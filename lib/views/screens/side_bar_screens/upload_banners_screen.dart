@@ -161,7 +161,9 @@ class _UploadBannersScreenState extends State<UploadBannersScreen> {
                   },
                   child: Text('SAVE')),
             ],
-          )
+          ),
+          Divider(color: Colors.grey,),
+
         ],
       ),
     );
