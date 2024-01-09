@@ -162,7 +162,17 @@ class _UploadBannersScreenState extends State<UploadBannersScreen> {
                   child: Text('SAVE')),
             ],
           ),
-          Divider(color: Colors.grey,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Divider(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Banners',style: TextStyle(fontWeight: FontWeight.w800,fontSize: 30),),
+            ),
+          ),
 
         ],
       ),
