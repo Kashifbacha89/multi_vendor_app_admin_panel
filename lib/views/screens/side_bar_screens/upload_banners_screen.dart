@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_vendor_app_admin_panel/views/screens/side_bar_screens/widgets/banners_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class UploadBannersScreen extends StatefulWidget {
@@ -154,7 +153,7 @@ class _UploadBannersScreenState extends State<UploadBannersScreen> {
               ),
               ElevatedButton(
                   style:
-                      ElevatedButton.styleFrom(primary: Colors.yellow.shade900),
+                      ElevatedButton.styleFrom(backgroundColor: Colors.yellow.shade900),
                   onPressed: () {
                     print(imageName);
                     _uploadBanners();
@@ -173,6 +172,7 @@ class _UploadBannersScreenState extends State<UploadBannersScreen> {
               child: Text('Banners',style: TextStyle(fontWeight: FontWeight.w800,fontSize: 30),),
             ),
           ),
+          BannersWidget(),
 
         ],
       ),
